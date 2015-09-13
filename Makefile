@@ -6,7 +6,7 @@
 #    By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/01 19:09:41 by lubaujar          #+#    #+#              #
-#    Updated: 2015/09/13 17:05:55 by lubaujar         ###   ########.fr        #
+#    Updated: 2015/09/13 17:57:31 by lubaujar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ RM = rm -rf
 FLAGS = -g -Wall -Wextra -Werror
 LDFLAGS = -I./include/ -I./libft/include/
 
-SRC = server.c \
+SRC = 	main.c \
+		server.c \
 		client.c
 
 OBJ = $(SRC:.c=.o)

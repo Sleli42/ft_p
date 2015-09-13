@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:44:50 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/13 17:08:21 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/13 18:41:32 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 //      *optval, socklen_t optlen);
 
 
-int		main(void)
+void		server(void)
 {
 	int					val;
 	int					ss;
@@ -51,7 +51,7 @@ int		main(void)
 		/* Accepte une connexion.
          * Les paramètres `from' et `len' peuvent etre NULL. */
 		len = sizeof(from);
-		f = accept(ss, (struct sockaddr *)&from, &len);
+		f = accept(ss, (struct sockaddr *)&from, (unsigned int *)&len);
 	}
-	return (0);
+	return ;
 }
