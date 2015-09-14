@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sleli42 <sleli42@student.42.fr>            +#+  +:+       +#+         #
+#    By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/01 19:09:41 by lubaujar          #+#    #+#              #
-#    Updated: 2015/09/14 13:58:23 by sleli42          ###   ########.fr        #
+#    Updated: 2015/09/14 15:10:08 by lubaujar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ FLAGS = -g -Wall -Wextra -Werror
 LDFLAGS = -I./include/ -I./libft/include/
 
 SRC_CLIENT = client.c
-
 SRC_SERVER = server.c
 
 OBJ_C = $(SRC_CLIENT:.c=.o)
 OBJ_S = $(SRC_SERVER:.c=.o)
+
 	SRCDIR_C	= ./srcs_client/
 	SRCDIR_S	= ./srcs_server/
 	OBJDIR_C	= ./objs_client/
@@ -64,7 +64,7 @@ clean:
 
 fclean: clean
 	@make fclean -C libft/
-	@echo "RM ./ftp..   \033[35mDELETE!\033[0m"
+	@echo "RM ./ftp..\t\t \033[35mDELETE!\033[0m"
 	@$(RM) $(NAME_C) $(NAME_S)
 
 re: fclean all

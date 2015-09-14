@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/13 18:58:06 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/14 15:10:38 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ struct answer
 /*
 *** client.c
 */
-void	client(char *s);
+void	client(void);
 /*
 ***	server.c
 */
