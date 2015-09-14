@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:44:50 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/14 15:15:14 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/14 16:21:13 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,42 @@
 //      *optval, socklen_t optlen);
 
 
-void	server(void)
+void	server(char *addr, int port)
 {
-	printf("Server OK!\n");
+	int					sock_s;
+	struct protoent		*sp;
+	struct sockaddr_in	sock_in;
+
+	sp = getprotobyname("tcp");
+	if (!sp)
+		printf("[server] getprotobyname() failed!\n");
+	sock_s = socket(PF_INET, SOCK_STREAM, sp->p_proto);
+	if (sock_s == -1)
+		printf("[server] socket() failed!\n");
+	sock_in.sin_family = AF_INET;
+	sock_in.sin_port = htons(port);
+	sock_in.sin_addr.s_addr = inet_addr(addr);
+	bind(sock_s, (struct sockaddr *)&sock_in, sizeof(sock_in));
+	/* Prépare le socket à la réception de demande de connexions */
+ 	if (listen(sock_s, 3) == -1)
+ 		printf("[server] listen() failed!\n");
+ 	while (21)
+ 	{
+ 		accept(sock_s, (struct sockaddr *)&sock_in, (unsigned int *)&sock_in);
+ 	}
 }
 
-int		main(void)
+int		main(int ac, char **av)
 {
-	server();
+	int		port;
+	char	*addr;
+
+	(void)ac;
+	addr = ft_strdup(av[1]);
+	port = ft_atoi(av[2]);
+	printf("addr: %s\n", addr);
+	printf("port: %d\n", port);
+	server(addr, port);
 	return (0);
 }
 

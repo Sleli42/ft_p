@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/14 15:10:38 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/14 16:13:51 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,22 @@ struct answer
 //     unsigned long s_addr;  		// load with inet_aton()
 // };
 // struct sockaddr {
-//    unsigned char   sa_len;         /* longueur totale 		*/
-//    sa_family_t     sa_family;      /* famille d'adresse 		*/
-//    char            sa_data[14];    /* valeur de l'adresse	*/
+// 	u_short sa_family;
+// 	char	sa_data[14];
 // };
-//struct hostent {
-//  char    *h_name;       /* Nom officiel de l'hôte.   */
-//	char   **h_aliases;    /* Liste d'alias.            */
-//  int      h_addrtype;   /* Type d'adresse de l'hôte. */
-//  int      h_length;     /* Longueur de l'adresse.    */
-//  char   **h_addr_list;  /* Liste d'adresses.         */
-
-//#define h_addr  h_addr_list[0] /* pour compatibilité.  */
-//};
+// struct protoent {
+//     char  *p_name;    /* Nom officiel du protocole */
+//     char **p_aliases; /* Liste d'alias             */
+//     int    p_proto;   /* Numéro du protocole       */
+// };
 
 /*
 *** client.c
 */
-void	client(void);
+void	client(char *addr, int port);
 /*
 ***	server.c
 */
-void	server(void);
+void	server(char *addr, int port);
 
 #endif

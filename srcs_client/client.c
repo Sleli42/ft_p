@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:44:50 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/14 15:15:30 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/14 16:17:00 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,40 @@
 
 #include "ftp.h"
 
-void	client(void)
+void	client(char *addr, int port)
 {
-	printf("Client OK!\n");
+	int					sock_c;
+	struct protoent		*sp;
+	struct sockaddr_in	sins;
+
+	sp = getprotobyname("tcp");
+	if (!sp)
+		printf("[client] getprotobyname() failed!\n");
+	sock_c = socket(PF_INET, SOCK_STREAM, sp->p_proto);
+	if (sock_c == -1)
+		printf("[client] socket() failed!\n");
+	/* Remplissage de la structure `sins' avec la famille de protocoles Internet,
+     * le numéro IP de la machine à contacter et le numéro de port. */
+	sins.sin_family = AF_INET;
+	sins.sin_port = htons(port);
+	sins.sin_addr.s_addr = inet_addr(addr);
+	if (connect(sock_c, (struct sockaddr *)&sins, sizeof(sins)) == -1)
+		printf("connect() failed!\n");
+	else
+		printf("Waiting connect . . .\n");
 }
 
-int		main(void)
+int		main(int ac, char **av)
 {
-	client();
+	int		port;
+	char	*addr;
+
+	(void)ac;
+	addr = ft_strdup(av[1]);
+	port = ft_atoi(av[2]);
+	printf("addr: %s\n", addr);
+	printf("port: %d\n", port);
+	client(addr, port);
 	return (0);
 }
 
@@ -70,7 +96,7 @@ int		main(void)
 // 	{
 // 		printf("Connect failed\n");
 // 		exit(1);
-// 	}
+// // 	}
 // 	else
 // 		printf("Waiting connect . . .\n");
 // 	return ;
