@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:44:50 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/14 16:21:13 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/14 17:01:19 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 //      *optval, socklen_t optlen);
 
 
-void	server(char *addr, int port)
+void	server(int port)
 {
 	int					sock_s;
 	struct protoent		*sp;
@@ -53,14 +53,11 @@ void	server(char *addr, int port)
 int		main(int ac, char **av)
 {
 	int		port;
-	char	*addr;
 
 	(void)ac;
-	addr = ft_strdup(av[1]);
 	port = ft_atoi(av[2]);
-	printf("addr: %s\n", addr);
 	printf("port: %d\n", port);
-	server(addr, port);
+	server(port);
 	return (0);
 }
 

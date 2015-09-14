@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/14 16:13:51 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/14 17:01:46 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ struct answer
 //     char **p_aliases; /* Liste d'alias             */
 //     int    p_proto;   /* Numéro du protocole       */
 // };
-
+//int accept(int sockfd, struct sockaddr *adresse, socklen_t *longueur);
 /*
 *** client.c
 */
@@ -72,6 +72,6 @@ void	client(char *addr, int port);
 /*
 ***	server.c
 */
-void	server(char *addr, int port);
+void	server(int port);
 
 #endif

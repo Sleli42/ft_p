@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:44:50 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/14 16:17:00 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/14 17:00:41 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include "ftp.h"
 
-void	client(char *addr, int port)
+void	client(int port)
 {
 	int					sock_c;
 	struct protoent		*sp;
@@ -35,7 +35,6 @@ void	client(char *addr, int port)
      * le numéro IP de la machine à contacter et le numéro de port. */
 	sins.sin_family = AF_INET;
 	sins.sin_port = htons(port);
-	sins.sin_addr.s_addr = inet_addr(addr);
 	if (connect(sock_c, (struct sockaddr *)&sins, sizeof(sins)) == -1)
 		printf("connect() failed!\n");
 	else
@@ -48,11 +47,9 @@ int		main(int ac, char **av)
 	char	*addr;
 
 	(void)ac;
-	addr = ft_strdup(av[1]);
 	port = ft_atoi(av[2]);
-	printf("addr: %s\n", addr);
 	printf("port: %d\n", port);
-	client(addr, port);
+	client(port);
 	return (0);
 }
 
