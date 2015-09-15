@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl.c                                       :+:      :+:    :+:   */
+/*   s_error.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/13 15:43:02 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/15 22:25:44 by lubaujar         ###   ########.fr       */
+/*   Created: 2015/09/15 21:52:58 by lubaujar          #+#    #+#             */
+/*   Updated: 2015/09/15 22:43:19 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ftp.h"
 
-void	ft_putendl(char const *s)
+void	server_error(char *err)
 {
-	ft_putstr(s);
-	write(1, "\n", 1);
+	if (ft_strcmp(err, "ACCEPT") == 0)
+		ft_putstr("accept() failed!\n");
+	if (ft_strcmp(err, "GETPROTOBYNAME") == 0)
+		ft_putstr("[server] getprotobyname() failed!\n");
+	if (ft_strcmp(err, "BIND") == 0)
+		ft_putstr("bind() failed!\n");
+	if (ft_strcmp(err, "DIR") == 0)
+		ft_putstr("cd <directory> failed!\n");
+	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/14 17:01:46 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/15 22:43:14 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,58 +20,59 @@
 # include <netinet/in.h>		// Internet Protocol family
 # include <arpa/inet.h>		// definitions for internet operations
 # include <netdb.h>			//definitions for network database operations
+# include <unistd.h>
 
 # include <stdio.h>
-# include <string.h>
-/* ==== REQUEST */
-# define REQUEST_PUT 	1
-# define REQUEST_GET 	2
-# define REQUEST_DIR 	3
 
-struct request
+typedef struct			s_server
 {
-	int		req;
-	int		nbbytes;	/* pour req_put only */
-	char	*path;
-};
-/* ===== ANSWER */
-# define ANSWER_OK		0
-# define ANSWER_UNKNOW	1
-# define ANSWER_ERROR	2
+	int					sock;
+	int					c_sock;		/* client socket -> accept() */
+	struct sockaddr_in	csins;
+	unsigned int		cslen;
+}						t_server;
 
-struct answer
+typedef	struct			s_action
 {
-	int		ans;
-	int		nbbytes;	/* pour get only */
-	int		errnum;
-};
-/* ==== SOCKET */
-// struct sockaddr_in {
-//         short   sin_family;       /* la famille de protocole 		*/
-//         u_short sin_port;         /* numéro de port 					*/
-//         struct  in_addr sin_addr; /* adresse IP de la machine 		*/
-//         char    sin_zero[8];      /* remplissage pour faire 16 octets*/
-// };
-// struct in_addr {
-//     unsigned long s_addr;  		// load with inet_aton()
-// };
-// struct sockaddr {
-// 	u_short sa_family;
-// 	char	sa_data[14];
-// };
-// struct protoent {
-//     char  *p_name;    /* Nom officiel du protocole */
-//     char **p_aliases; /* Liste d'alias             */
-//     int    p_proto;   /* Numéro du protocole       */
-// };
-//int accept(int sockfd, struct sockaddr *adresse, socklen_t *longueur);
+	char				*action_name;
+	void				(*f)(char *);
+}						t_action;
+/*
+*** c_error.c
+*/
+void	client_error(char *err);
 /*
 *** client.c
 */
+void	usage(char *s);
+int		create_client(char *addr, int port);
 void	client(char *addr, int port);
+/*
+***	c_init.c
+*/
+t_client	*init_client(void);
+/*
+*** s_error.c
+*/
+void	server_error(char *err);
 /*
 ***	server.c
 */
+void	usage(char *s);
+int		create_server(int port);
 void	server(int port);
-
+/*
+***	s_init.c
+*/
+t_server	*init_server(void);
+/*
+***	s_builtins.c
+*/
+void	try_builtins(char *buff);
+void	display_pwd(char *s);
+void	goto_directory(char *buff);
+/*
+***	s_tools.c
+*/
+void	read_socket(int	sock);
 #endif

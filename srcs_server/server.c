@@ -6,88 +6,53 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:44:50 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/14 17:01:19 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/15 22:43:16 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftp.h"
 
-/* ==== SERVER */
-// int socket (int domain, int type, int protocol);
-// int setsockopt (int s, int level, int optname, char *optval, int optlen);
-// int bind (int s, struct sockaddr *name, int namelen);
-	/* Fournir un nom à une socket  */
-// int listen (int s, int backlog);
-	/* Attendre des connexions sur une socket   */
-// int accept (int s, struct sockaddr *addr, int *addrlen);
-	/*Accepter une connexion sur une socket  */
-// int  setsockopt(int  s, int level, int optname, const void
-//      *optval, socklen_t optlen);
-
-
-void	server(int port)
+void	usage(char *s)
 {
-	int					sock_s;
-	struct protoent		*sp;
-	struct sockaddr_in	sock_in;
+	ft_putstr("Usage: ");
+	ft_putstr(s);
+	ft_putstr(" <port>\n");
+	exit(-1);
+}
 
-	sp = getprotobyname("tcp");
-	if (!sp)
-		printf("[server] getprotobyname() failed!\n");
-	sock_s = socket(PF_INET, SOCK_STREAM, sp->p_proto);
-	if (sock_s == -1)
-		printf("[server] socket() failed!\n");
-	sock_in.sin_family = AF_INET;
-	sock_in.sin_port = htons(port);
-	sock_in.sin_addr.s_addr = inet_addr(addr);
-	bind(sock_s, (struct sockaddr *)&sock_in, sizeof(sock_in));
-	/* Prépare le socket à la réception de demande de connexions */
- 	if (listen(sock_s, 3) == -1)
- 		printf("[server] listen() failed!\n");
- 	while (21)
- 	{
- 		accept(sock_s, (struct sockaddr *)&sock_in, (unsigned int *)&sock_in);
- 	}
+int		create_server(int port)
+{
+	struct sockaddr_in	sins;
+	struct protoent		*serv_p;
+	int					sock;
+
+	if ((serv_p = getprotobyname("tcp")) == 0)
+		server_error("GETPROTOBYNAME");
+	sock = socket(PF_INET, SOCK_STREAM, serv_p->p_proto);
+	sins.sin_family = AF_INET;
+	sins.sin_port = htons(port);
+	sins.sin_addr.s_addr = htonl(INADDR_ANY);
+	if (bind(sock, (struct sockaddr *)&sins, sizeof(sins)) == -1)
+		server_error("BIND");
+	listen(sock, 42);
+	return (sock);
 }
 
 int		main(int ac, char **av)
 {
-	int		port;
+	t_client	*s_all;
+	int			port;
 
-	(void)ac;
-	port = ft_atoi(av[2]);
-	printf("port: %d\n", port);
-	server(port);
+	if (ac != 2)
+		usage(av[0]);
+	port = atoi(av[1]);
+	s_all = init_server();
+	sock = create_server(port);
+	if ((client_s = accept(sock, (struct sockaddr *)&csins, &cslen)) == -1)
+		server_error("ACCEPT");
+	else
+		read_socket(client_s);
+	close(client_s);
+	close(sock);
 	return (0);
 }
-
-// void		server(void)
-// {
-// 	int					val;
-// 	int					ss;
-// 	struct sockaddr_in	soc_in;
-// 	int					len;
-// 	int					f;
-// 	struct sockaddr_in	from;
-
-// 	/* socket Internet, de type stream (fiable, bi-directionnel) */
-// 	ss = socket(PF_INET, SOCK_STREAM, 0);
-// 	/* Force la réutilisation de l'adresse si non allouée */
-// 	val = 1;
-// 	setsockopt(ss, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
-// 	/* Nomme le socket: socket inet, port PORT, adresse IP quelconque */
-// 	soc_in.sin_family = AF_INET;
-// 	soc_in.sin_addr.s_addr = htonl(INADDR_ANY);
-// 	soc_in.sin_port = htons(2121); /* 2121 */
-// 	bind(ss, (struct sockaddr *)&soc_in, sizeof(soc_in));
-// 	/* Prépare le socket à la réception de demande de connexions */
-// 	listen(ss, 5);
-// 	while (21)
-// 	{
-// 		/* Accepte une connexion.
-//          * Les paramètres `from' et `len' peuvent etre NULL. */
-// 		len = sizeof(from);
-// 		f = accept(ss, (struct sockaddr *)&from, (unsigned int *)&len);
-// 	}
-// 	return ;
-// }

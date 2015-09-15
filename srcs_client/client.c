@@ -6,95 +6,50 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:44:50 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/14 17:00:41 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/15 22:43:16 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ==== CLIENT */
-// u_long htonl (u_long hostlong);
-// u_short htons (u_short hostshort);
-// struct hostent *gethostbyname (char *name);
-// int socket (int domain, int type, int protocol);
-// int connect (int s, struct sockaddr *name, int namelen);
-
 #include "ftp.h"
 
-void	client(int port)
+void	usage(char *s)
 {
-	int					sock_c;
-	struct protoent		*sp;
-	struct sockaddr_in	sins;
+	ft_putstr("Usage: ");
+	if (s)
+		ft_putstr(s);
+	ft_putstr(" <addr> <port>\n");
+	exit(-1);
+}
 
-	sp = getprotobyname("tcp");
-	if (!sp)
-		printf("[client] getprotobyname() failed!\n");
-	sock_c = socket(PF_INET, SOCK_STREAM, sp->p_proto);
-	if (sock_c == -1)
-		printf("[client] socket() failed!\n");
-	/* Remplissage de la structure `sins' avec la famille de protocoles Internet,
-     * le numéro IP de la machine à contacter et le numéro de port. */
+int		create_client(char *addr, int port)
+{
+	struct sockaddr_in	sins;
+	struct protoent		*client_p;
+	int					sock;
+
+	if ((client_p = getprotobyname("tcp")) == 0)
+		client_error("GETPROTOBYNAME");
+	sock = socket(PF_INET, SOCK_STREAM, client_p->p_proto);
 	sins.sin_family = AF_INET;
 	sins.sin_port = htons(port);
-	if (connect(sock_c, (struct sockaddr *)&sins, sizeof(sins)) == -1)
-		printf("connect() failed!\n");
-	else
-		printf("Waiting connect . . .\n");
+	sins.sin_addr.s_addr = inet_addr(addr);
+	if (connect(sock, (struct sockaddr *)&sins, sizeof(sins)) == -1)
+		client_error("CONNECT");
+	return (sock);
 }
 
 int		main(int ac, char **av)
 {
-	int		port;
-	char	*addr;
+	int	port;
+	int	sock;
+	char	*buff;
 
-	(void)ac;
+	if (ac != 3)
+		usage(av[1]);
 	port = ft_atoi(av[2]);
-	printf("port: %d\n", port);
-	client(port);
+	sock = create_client(av[1], port);
+	while (get_next_line(0, &buff) > 0)
+		write(sock, buff, ft_strlen(buff));
+	close(sock);
 	return (0);
 }
-
-
-// void		client(char	*s)
-// {
-// 	int					sc;
-// 	struct hostent		*sp;
-// 	struct sockaddr_in	sins;
-// /* Obtention d'information au sujet de la machine `serverhost' */
-// 	sp = gethostbyname(s); /* 127.0.0.1 */
-// 	if (!sp)
-// 		exit(1);
-// 	else
-// 		printf("hostname: %s\n", sp->h_name);
-// 	// int		i = 0;
-// 	// while (sp->h_addr_list[i])
-// 	// 	printf("%s\n", sp->h_addr_list[i++]);
-// 	// exit(1);
-// 	if (sp == NULL)
-// 	{
-// 		printf("gethostbyname: %s not found\n", s);
-// 		exit(1);
-// 	}
-// /* Création d'un socket Internet de type stream (fiable, bi-directionnel) */
-// 	sc = socket(PF_INET, SOCK_STREAM, 0);	/* PF_INET: Internet version 4 protocols */
-//  SOCK_STREAM: type provides sequenced, reliable, two-way connection based byte streams.
-// 	if (sc == -1)
-// 	{
-// 		printf("Socket failed\n");
-// 		exit(1);
-// 	}
-// 	/* Remplissage de la structure `sins' avec la famille de protocoles Internet,
-//      * le numéro IP de la machine à contacter et le numéro de port. */
-// 	sins.sin_family = AF_INET; /* AF_INET Désigne une connection inter-réseaux */
-// 	ft_memcpy(&sins.sin_addr, sp->h_addr_list[0], sp->h_length);
-// 	sins.sin_port = htons(2121); /* 2121 */
-// 	/* Tentative d'établissement de la connexion. */
-// 	/* connect() : Débuter une connexion sur une socket */
-// 	if (connect(sc, (struct sockaddr *)&sins, sizeof(sins)) == -1)
-// 	{
-// 		printf("Connect failed\n");
-// 		exit(1);
-// // 	}
-// 	else
-// 		printf("Waiting connect . . .\n");
-// 	return ;
-// }
