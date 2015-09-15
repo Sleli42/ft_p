@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/15 22:43:14 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/16 00:38:40 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,55 +24,64 @@
 
 # include <stdio.h>
 
+
+
 typedef struct			s_server
 {
+	struct sockaddr_in	csins;
 	int					sock;
 	int					c_sock;		/* client socket -> accept() */
-	struct sockaddr_in	csins;
 	unsigned int		cslen;
+	char				cmd[1021];
 }						t_server;
 
 typedef	struct			s_action
 {
 	char				*action_name;
-	void				(*f)(char *);
+	void				(*f)(t_server *);
 }						t_action;
+
+/*
+*** ========================= client
+*/
+
 /*
 *** c_error.c
 */
-void	client_error(char *err);
-/*
-*** client.c
-*/
-void	usage(char *s);
-int		create_client(char *addr, int port);
-void	client(char *addr, int port);
+void		client_error(char *err);
 /*
 ***	c_init.c
 */
-t_client	*init_client(void);
+void		usage(char *s);
+int			create_client(char *addr, int port);
+/*
+***	c_tools.c
+*/
+void		write_socket(int sock);
+void		close_and_exit(int sock);
+/*
+***	========================= server
+*/
+
 /*
 *** s_error.c
 */
-void	server_error(char *err);
-/*
-***	server.c
-*/
-void	usage(char *s);
-int		create_server(int port);
-void	server(int port);
+void		server_error(char *err);
 /*
 ***	s_init.c
 */
 t_server	*init_server(void);
+void		usage(char *s);
+int			create_server(int port);
 /*
 ***	s_builtins.c
 */
-void	try_builtins(char *buff);
-void	display_pwd(char *s);
-void	goto_directory(char *buff);
+void		try_builtins(t_server *sv);
+void		display_pwd(t_server *sv);
+void		goto_directory(t_server *sv);
+void		stop_connect(t_server *sv);
 /*
 ***	s_tools.c
 */
-void	read_socket(int	sock);
+void		read_socket(t_server *sv);
 #endif

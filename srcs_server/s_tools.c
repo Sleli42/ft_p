@@ -6,20 +6,20 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:21:53 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/15 22:43:18 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/16 00:33:36 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftp.h"
 
-void	read_socket(int	sock)
+void	read_socket(t_server *sv)
 {
-	char	buff[1021];
 	int		r;
 
-	while ((r = read(client_s, buff, 1020)) > 0)
+	while ((r = read(sv->c_sock, sv->cmd, 1020)) > 0)
 	{
-		buff[r] = '\0';
-		try_builtins(buff);
+		sv->cmd[r] = '\0';
+		try_builtins(sv);
+		//try_exec_binary(sv);
 	}
 }

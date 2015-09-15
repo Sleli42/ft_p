@@ -6,7 +6,7 @@
 #    By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/01 19:09:41 by lubaujar          #+#    #+#              #
-#    Updated: 2015/09/15 22:22:51 by lubaujar         ###   ########.fr        #
+#    Updated: 2015/09/15 23:57:33 by lubaujar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,11 @@ FLAGS = -g -Wall -Wextra -Werror
 LDFLAGS = -I./include/ -I./libft/include/
 
 SRC_CLIENT = client.c \
+				c_init.c \
+				c_tools.c \
 				c_error.c
 SRC_SERVER = server.c \
+				s_init.c \
 				s_error.c \
 				s_builtins.c \
 				s_tools.c
