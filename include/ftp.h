@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/16 00:38:40 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/16 21:48:34 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			create_server(int port);
 /*
 ***	s_builtins.c
 */
-void		try_builtins(t_server *sv);
+int			try_builtins(t_server *sv);
 void		display_pwd(t_server *sv);
 void		goto_directory(t_server *sv);
 void		stop_connect(t_server *sv);
