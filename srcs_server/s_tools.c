@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:21:53 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/16 22:21:15 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/17 19:30:54 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 
 void	read_socket(t_server *sv)
 {
-	int		r;
+	char	*buff;
 
-	while ((r = read(sv->c_sock, sv->cmd, 1020)) > 0)
+	buff = NULL;
+	while (get_next_line(sv->c_sock, &buff) > 0)
 	{
-		sv->cmd[r] = 0;
-		if (try_builtins(sv) == 1)
-			write(sv->c_sock, "SUCCESS\0", 8);
-		else
-			write(sv->c_sock, "ERROR\0", 6);
+		// printf("|%s|\n", buff);
+		// printf("len: %zu\n", ft_strlen(buff));
+		if (try_builtins(buff, sv->c_sock) != 1)
+		{
+			if (ft_strlen(buff) > 0)
+				write(sv->c_sock, "~> ERROR", 8);
+			else
+				write(sv->c_sock, "\0", 1);
+		}
 	}
 }

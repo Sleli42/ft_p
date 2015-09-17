@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/16 21:48:34 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/17 18:43:18 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,12 @@ typedef struct			s_server
 	int					sock;
 	int					c_sock;		/* client socket -> accept() */
 	unsigned int		cslen;
-	char				cmd[1021];
 }						t_server;
 
 typedef	struct			s_action
 {
 	char				*action_name;
-	void				(*f)(t_server *);
+	void				(*f)(char *, int);
 }						t_action;
 
 /*
@@ -57,6 +56,7 @@ int			create_client(char *addr, int port);
 /*
 ***	c_tools.c
 */
+void		read_socket_return(int sock2read);
 void		write_socket(int sock);
 void		close_and_exit(int sock);
 /*
@@ -76,10 +76,10 @@ int			create_server(int port);
 /*
 ***	s_builtins.c
 */
-int			try_builtins(t_server *sv);
-void		display_pwd(t_server *sv);
-void		goto_directory(t_server *sv);
-void		stop_connect(t_server *sv);
+int			try_builtins(char *cmd, int c_sock);
+void		display_pwd(char *cmd, int c_sock);
+void		goto_directory(char *cmd, int c_sock);
+void		stop_connect(char *cmd, int c_sock);
 /*
 ***	s_tools.c
 */
