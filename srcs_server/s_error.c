@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 21:52:58 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/16 22:27:34 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/18 00:43:23 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,9 @@ void	server_error(char *err)
 		ft_putstr("bind() failed!\n");
 	if (ft_strcmp(err, "DIR") == 0)
 		ft_putstr("cd <directory> failed!\n");
+	if (ft_strcmp(err, "FORK") == 0)
+		ft_putstr("fork() failed!\n");
+	if (ft_strcmp(err, "EXECVE") == 0)
+		ft_putstr("execve() failed!\n");
 	exit(1);
 }

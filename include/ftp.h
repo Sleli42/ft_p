@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/17 18:43:18 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/18 00:41:45 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct			s_server
 	int					sock;
 	int					c_sock;		/* client socket -> accept() */
 	unsigned int		cslen;
+	char				**dupenv;
+	char				**path2exec;
 }						t_server;
 
 typedef	struct			s_action
@@ -64,13 +66,17 @@ void		close_and_exit(int sock);
 */
 
 /*
+*** debug.c
+*/
+void		display_tab(char **tab);
+/*
 *** s_error.c
 */
 void		server_error(char *err);
 /*
 ***	s_init.c
 */
-t_server	*init_server(void);
+t_server	*init_server(char **env);
 void		usage(char *s);
 int			create_server(int port);
 /*
@@ -81,7 +87,16 @@ void		display_pwd(char *cmd, int c_sock);
 void		goto_directory(char *cmd, int c_sock);
 void		stop_connect(char *cmd, int c_sock);
 /*
+***	s_exec.c
+*/
+int			try_exec(t_server *sv, char *cmd);
+int			good_access(char *bin);
+char		*create_path(char *path, char *bin);
+int			exec_right_binary(t_server *sv, char **argv_bin);
+void		exec_binary(char *bin, char **argv_bin, char **env);
+/*
 ***	s_tools.c
 */
 void		read_socket(t_server *sv);
+
 #endif

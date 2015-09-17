@@ -6,7 +6,7 @@
 #    By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/01 19:09:41 by lubaujar          #+#    #+#              #
-#    Updated: 2015/09/15 23:57:33 by lubaujar         ###   ########.fr        #
+#    Updated: 2015/09/17 21:58:15 by lubaujar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ SRC_SERVER = server.c \
 				s_init.c \
 				s_error.c \
 				s_builtins.c \
-				s_tools.c
+				s_exec.c \
+				s_tools.c \
+				debug.c
 
 OBJ_C = $(SRC_CLIENT:.c=.o)
 OBJ_S = $(SRC_SERVER:.c=.o)

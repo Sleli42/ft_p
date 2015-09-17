@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:19:02 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/17 19:31:47 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/18 01:08:18 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	display_pwd(char *cmd, int c_sock)
 
 void	goto_directory(char *cmd, int c_sock)
 {
-	(void)c_sock;
 	if (access(cmd, F_OK) == 0)
 	{
 		if (chdir(cmd) == -1)

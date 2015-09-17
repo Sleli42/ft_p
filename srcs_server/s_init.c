@@ -6,13 +6,13 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:40:14 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/16 22:39:12 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/18 00:44:39 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftp.h"
 
-t_server	*init_server(void)
+t_server	*init_server(char **env)
 {
 	t_server	*new;
 
@@ -23,6 +23,8 @@ t_server	*init_server(void)
 		new->sock = 0;
 		new->c_sock = 0;
 		new->cslen = 0;
+		new->dupenv = env;
+		new->path2exec = ft_strsplit(env[0] + 5, ':');
 	}
 	return (new);
 }
