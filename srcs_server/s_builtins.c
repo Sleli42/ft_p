@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:19:02 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/18 01:08:18 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/21 20:55:50 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,28 @@ void	display_pwd(char *cmd, int c_sock)
 {
 	char	*pwd;
 	char	*buff;
-	char	*ret;
 
 	(void)cmd;
 	buff = NULL;
 	pwd = getcwd(buff, 42);
-	buff = ft_strjoin(pwd, "\n");
-	ret = ft_strjoin(buff, "~> SUCCESS");
-	ft_strdel(&buff);
-	write(c_sock, ret, ft_strlen(ret));
-	ft_strdel(&ret);
+	send(c_sock, pwd, ft_strlen(pwd), 0);
+	ft_strdel(&pwd);
 }
 
 void	goto_directory(char *cmd, int c_sock)
 {
+	(void)c_sock;
 	if (access(cmd, F_OK) == 0)
 	{
 		if (chdir(cmd) == -1)
 			server_error("DIR");
-		write(c_sock, "~> SUCCESS", 10);
 	}
 }
 
 void	stop_connect(char *cmd, int c_sock)
 {
 	(void)cmd;
-	write(1, "Bye bye!\n", 9);
+	write(0, "Bye bye!\n", 9);
 	close(c_sock);
-	exit(1);
+	exit(0);
 }

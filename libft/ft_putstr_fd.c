@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/13 15:39:07 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/17 16:23:12 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/21 12:08:09 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putstr_fd(char const *s, int fd)
 {
-	write(fd, (char *)s, ft_strlen((char *)s));
+	write(fd, s, ft_strlen((char *)s));
 }

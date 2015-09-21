@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 21:52:58 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/18 00:43:23 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/21 20:16:12 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,9 @@ void	server_error(char *err)
 		ft_putstr("fork() failed!\n");
 	if (ft_strcmp(err, "EXECVE") == 0)
 		ft_putstr("execve() failed!\n");
+	if (ft_strcmp(err, "RECV") == 0)
+		ft_putstr("[client] recv() failed!\n");
+	if (ft_strcmp(err, "SEND") == 0)
+		ft_putstr("[client] send() failed!\n");
 	exit(1);
 }
