@@ -6,13 +6,27 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:40:14 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/18 00:44:39 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 22:55:28 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftp.h"
 
-t_server	*init_server(char **env)
+t_all		*init_all(char **env)
+{
+	t_all	*new;
+
+	if (!(new = (t_all *)malloc(sizeof(t_all))))
+		return (NULL);
+	else
+	{
+		new->sv = init_server();
+		new->env = init_env(env);
+	}
+	return (new);
+}
+
+t_server	*init_server(void)
 {
 	t_server	*new;
 
@@ -23,13 +37,28 @@ t_server	*init_server(char **env)
 		new->sock = 0;
 		new->c_sock = 0;
 		new->cslen = 0;
+	}
+	return (new);
+}
+
+t_env		*init_env(char **env)
+{
+	t_env	*new;
+	char	*buff;
+
+	buff = NULL;
+	if (!(new = (t_env *)malloc(sizeof(t_env))))
+		return (NULL);
+	else
+	{
+		new->lowest_pwd = getcwd(buff, 42);
 		new->dupenv = env;
 		new->path2exec = ft_strsplit(env[0] + 5, ':');
 	}
 	return (new);
 }
 
-void	usage(char *s)
+void		usage(char *s)
 {
 	ft_putstr("Usage: ");
 	ft_putstr(s);
@@ -37,7 +66,7 @@ void	usage(char *s)
 	exit(-1);
 }
 
-int		create_server(int port)
+int			create_server(int port)
 {
 	struct sockaddr_in	sins;
 	struct protoent		*serv_p;

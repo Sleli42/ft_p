@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 23:50:21 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 17:33:55 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 23:01:22 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	read_socket_return(int sock2read)
 	{
 		buff[r] = 0;
 		write(1, buff, ft_strlen(buff));
-		//printf("|%c|\n", buff[r - 2]);
-		if (buff[r - 3] == '`' /*|| buff[r - 3] == 'R' */|| buff[0] == 0)
+		if (buff[r - 3] == '`' || buff[0] == 0)
 			return ;
 	}
 }

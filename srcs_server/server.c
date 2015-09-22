@@ -6,38 +6,45 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:44:50 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 16:20:51 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 22:56:24 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftp.h"
 
-int		main(int ac, char **av, char **env)
+void	loop(t_all *all)
 {
-	t_server	*sv;
-	int			port;
+	pid_t	pid;
 
-	if (ac != 2)
-		usage(av[0]);
-	port = atoi(av[1]);
-	sv = init_server(env);
-	sv->sock = create_server(port);
 	while (1091111096051)
 	{
-		if ((sv->c_sock = accept(sv->sock, (struct sockaddr *)&(sv->csins),
-			&(sv->cslen))) == -1)
+		if ((all->sv->c_sock = accept(all->sv->sock,
+			(struct sockaddr *)&(all->sv->csins), &(all->sv->cslen))) == -1)
 			server_error("ACCEPT");
 		else
 		{
-			if (fork() == 0)
+			if ((pid = fork() == 0))
 			{
-				read_socket(sv);
-				close(sv->sock);
+				read_socket(all);
+				close(all->sv->sock);
 				exit(0);
 			}
+			else
+				signal(SIGCHLD, SIG_IGN);
 		}
 	}
-	//close(sv->sock);
-	//exit(0);
+}
+
+int		main(int ac, char **av, char **env)
+{
+	t_all	*all;
+	int		port;
+
+	if (ac != 2)
+		usage(av[0]);
+	port = ft_atoi(av[1]);
+	all = init_all(env);
+	all->sv->sock = create_server(port);
+	loop(all);
 	return (0);
 }

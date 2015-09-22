@@ -6,21 +6,21 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/17 21:14:36 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 16:53:37 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 22:51:23 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftp.h"
 
-int		try_exec(t_server *sv, char *cmd)
+int		try_exec(t_all *all, char *cmd)
 {
 	char	**argv_bin;
 
 	close(1);
-	dup2(sv->c_sock, 1);
+	dup2(all->sv->c_sock, 1);
 	cmd = ft_epur_str(cmd);
 	argv_bin = ft_strsplit(cmd, ' ');
-	if (exec_right_binary(sv, argv_bin) == 1)
+	if (exec_right_binary(all, argv_bin) == 1)
 	{
 		dup2(1, STDOUT_FILENO);
 		del_array(&argv_bin);
@@ -46,19 +46,19 @@ char	*create_path(char *path, char *bin)
 	return (tmp);
 }
 
-int		exec_right_binary(t_server *sv, char **argv_bin)
+int		exec_right_binary(t_all *all, char **argv_bin)
 {
 	int		ct;
 	char	*bin_tmp;
 
 	ct = 0;
 	bin_tmp = NULL;
-	while (sv->path2exec[ct])
+	while (all->env->path2exec[ct])
 	{
-		bin_tmp = create_path(sv->path2exec[ct], argv_bin[0]);
+		bin_tmp = create_path(all->env->path2exec[ct], argv_bin[0]);
 		if (good_access(bin_tmp))
 		{
-			exec_binary(bin_tmp, argv_bin, sv->dupenv);
+			exec_binary(bin_tmp, argv_bin, all->env->dupenv);
 			return (1);
 		}
 		ft_strdel(&bin_tmp);

@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:21:53 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 17:33:50 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 23:01:12 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,28 @@ void	display_return_and_explanation(char *err, int sock2write, int msg)
 	}
 }
 
-void	read_socket(t_server *sv)
+void	read_socket(t_all *all)
 {
 	int		r;
 	char	buff[4096];
 
 	ft_memset(buff, 0, ft_strlen(buff));
-	while ((r = recv(sv->c_sock, buff, 4095, 0)) > 0)
+	while ((r = recv(all->sv->c_sock, buff, 4095, 0)) > 0)
 	{
 		buff[r] = 0;
 		if (buff[0] == 0)
-			send(sv->c_sock, "\0", 1, 0);
+			send(all->sv->c_sock, "\0", 1, 0);
 		else
 		{
-			if (try_builtins(buff, sv->c_sock) == 0)
+			if (try_builtins(all, buff) == 0)
 			{
-				if (try_exec(sv, buff) == 0)
-					display_return_and_explanation(buff, sv->c_sock, 0);
+				if (try_exec(all, buff) == 0)
+					display_return_and_explanation(buff, all->sv->c_sock, 0);
 				else
-					display_return_and_explanation(buff, sv->c_sock, 1);
+					display_return_and_explanation(buff, all->sv->c_sock, 1);
 			}
 			else
-				display_return_and_explanation(buff, sv->c_sock, 1);
+				display_return_and_explanation(buff, all->sv->c_sock, 1);
 		}
 	}
 }

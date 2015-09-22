@@ -6,13 +6,13 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:19:02 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 17:33:31 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 22:59:35 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftp.h"
 
-int		try_builtins(char *cmd, int c_sock)
+int		try_builtins(t_all *all, char *cmd)
 {
 	int						i;
 	static const t_action	built[] =
@@ -26,7 +26,7 @@ int		try_builtins(char *cmd, int c_sock)
 		if (ft_strncmp(cmd, built[i].action_name,
 			ft_strlen(built[i].action_name)) == 0)
 		{
-			built[i].f(cmd, c_sock);
+			built[i].f(all, cmd);
 			return (1);
 		}
 		i++;
@@ -34,7 +34,7 @@ int		try_builtins(char *cmd, int c_sock)
 	return (0);
 }
 
-void	display_pwd(char *cmd, int c_sock)
+void	display_pwd(t_all *all, char *cmd)
 {
 	char	*pwd;
 	char	*buff;
@@ -43,13 +43,13 @@ void	display_pwd(char *cmd, int c_sock)
 	buff = NULL;
 	pwd = getcwd(buff, 42);
 	pwd = ft_strjoin(pwd, "\n");
-	send(c_sock, pwd, ft_strlen(pwd), 0);
+	send(all->sv->c_sock, pwd, ft_strlen(pwd), 0);
 	ft_strdel(&pwd);
 }
 
-void	goto_directory(char *cmd, int c_sock)
+void	goto_directory(t_all *all, char *cmd)
 {
-	(void)c_sock;
+	(void)all;
 	cmd = ft_strdup(cmd + 3);
 	if (access(cmd, F_OK) == 0)
 	{
@@ -61,10 +61,10 @@ void	goto_directory(char *cmd, int c_sock)
 		server_error("ACCESS");
 }
 
-void	stop_connect(char *cmd, int c_sock)
+void	stop_connect(t_all *all, char *cmd)
 {
 	(void)cmd;
 	write(0, "Bye bye!\n", 9);
-	close(c_sock);
+	close(all->sv->c_sock);
 	exit(0);
 }
