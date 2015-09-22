@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:21:53 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 23:01:12 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 23:22:59 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	display_return_and_explanation(char *err, int sock2write, int msg)
 	buff = NULL;
 	if (msg == 0)
 	{
-		buff = ft_strjoin("~> ERROR\t'", err);
+		buff = ft_strjoin("~> ERROR '", err);
 		buff = ft_strjoin(buff, "' command not found\t [`KO`]\n");
 		send(sock2write, buff, ft_strlen(buff), 0);
 		ft_strdel(&buff);
 	}
 	else if (msg == 1)
 	{
-		buff = ft_strjoin("~> SUCCESS\t'", err);
+		buff = ft_strjoin("~> SUCCESS '", err);
 		buff = ft_strjoin(buff, "'\t [`OK`]\n");
 		send(sock2write, buff, ft_strlen(buff), 0);
 	}
@@ -43,19 +43,16 @@ void	read_socket(t_all *all)
 	while ((r = recv(all->sv->c_sock, buff, 4095, 0)) > 0)
 	{
 		buff[r] = 0;
+		//write(1, buff, ft_strlen(buff));
 		if (buff[0] == 0)
 			send(all->sv->c_sock, "\0", 1, 0);
 		else
 		{
 			if (try_builtins(all, buff) == 0)
 			{
-				if (try_exec(all, buff) == 0)
-					display_return_and_explanation(buff, all->sv->c_sock, 0);
-				else
-					display_return_and_explanation(buff, all->sv->c_sock, 1);
+				try_exec(all, buff);
 			}
-			else
-				display_return_and_explanation(buff, all->sv->c_sock, 1);
+
 		}
 	}
 }

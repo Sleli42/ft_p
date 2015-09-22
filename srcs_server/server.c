@@ -6,11 +6,18 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:44:50 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 22:56:24 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 23:34:50 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftp.h"
+
+/*
+***		[X] messages d'erreurs
+*/
+
+
+
 
 void	loop(t_all *all)
 {
