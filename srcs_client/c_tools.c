@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   c_tools.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sleli42 <sleli42@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 23:50:21 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 02:12:08 by sleli42          ###   ########.fr       */
+/*   Updated: 2015/09/22 15:19:11 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ void	read_socket_return(int sock2read)
 	char	buff[4096];
 
 	ft_memset(buff, 0, ft_strlen(buff));
-	if ((r = recv(sock2read, buff, 4095, 0)) > 0)
+	while ((r = recv(sock2read, buff, 4095, 0)) > 0)
 	{
 		buff[r] = 0;
 		write(1, buff, ft_strlen(buff));
+		if (buff[r - 3] == 'S' || buff[r - 3] == 'R' || buff[0] == 0)
+			return ;
 	}
 }
 
