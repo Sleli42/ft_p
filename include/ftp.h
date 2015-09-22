@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 16:24:27 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 17:24:30 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void		exec_binary(char *bin, char **argv_bin, char **env);
 /*
 ***	s_tools.c
 */
+void		display_return_and_explanation(char *err, int sock2write, int msg);
 void		read_socket(t_server *sv);
 
 #endif
