@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:19:02 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 16:30:40 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 16:55:18 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ int		try_builtins(char *cmd, int c_sock)
 			ft_strlen(built[i].action_name)) == 0)
 		{
 			built[i].f(cmd, c_sock);
-			//send(c_sock, "~> SUCCESS\n", 12, 0);
 			return (1);
 		}
 		i++;
 	}
-	//send(c_sock, "~> ERROR\n", 10, 0);
 	return (0);
 }
 
@@ -52,11 +50,15 @@ void	display_pwd(char *cmd, int c_sock)
 void	goto_directory(char *cmd, int c_sock)
 {
 	(void)c_sock;
+	cmd = ft_strdup(cmd + 3);
 	if (access(cmd, F_OK) == 0)
 	{
 		if (chdir(cmd) == -1)
 			server_error("DIR");
+		ft_strdel(&cmd);
 	}
+	else
+		server_error("ACCESS");
 }
 
 void	stop_connect(char *cmd, int c_sock)

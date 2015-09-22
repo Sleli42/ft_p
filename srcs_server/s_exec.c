@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/17 21:14:36 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 16:26:46 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 16:53:37 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ int		try_exec(t_server *sv, char *cmd)
 
 	close(1);
 	dup2(sv->c_sock, 1);
-	//printf("%s\n", cmd);
 	cmd = ft_epur_str(cmd);
 	argv_bin = ft_strsplit(cmd, ' ');
 	if (exec_right_binary(sv, argv_bin) == 1)
 	{
-		//write(sv->c_sock, "~> SUCCESS", 10);
 		dup2(1, STDOUT_FILENO);
 		del_array(&argv_bin);
 		return (1);
