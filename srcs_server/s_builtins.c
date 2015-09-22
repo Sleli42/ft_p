@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   s_builtins.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sleli42 <sleli42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:19:02 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/21 20:55:50 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 12:30:10 by sleli42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ int		try_builtins(char *cmd, int c_sock)
 			ft_strlen(built[i].action_name)) == 0)
 		{
 			built[i].f(cmd, c_sock);
+			send(c_sock, "~> SUCCESS\n", 12, 0);
 			return (1);
 		}
 		i++;
 	}
+	send(c_sock, "~> ERROR\n", 10, 0);
 	return (0);
 }
 
@@ -43,6 +45,7 @@ void	display_pwd(char *cmd, int c_sock)
 	buff = NULL;
 	pwd = getcwd(buff, 42);
 	send(c_sock, pwd, ft_strlen(pwd), 0);
+	send(c_sock, "\n", 1, 0);
 	ft_strdel(&pwd);
 }
 

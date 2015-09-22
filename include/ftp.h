@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ftp.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sleli42 <sleli42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/21 17:42:26 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 01:55:18 by sleli42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <arpa/inet.h>		// definitions for internet operations
 # include <netdb.h>			//definitions for network database operations
 # include <unistd.h>
+# include <sys/wait.h>
 
 # include <stdio.h>
 

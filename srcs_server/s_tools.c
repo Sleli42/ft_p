@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   s_tools.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sleli42 <sleli42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:21:53 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/21 20:56:13 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 03:22:32 by sleli42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	read_socket(t_server *sv)
 	ft_memset(buff, 0, ft_strlen(buff));
 	while ((r = recv(sv->c_sock, buff, 4095, 0)) > 0)
 	{
-		write(1, buff, ft_strlen(buff));
-		if (try_builtins(buff, sv->c_sock) == 0)
-			send(sv->c_sock, "ERROR\n", 7, 0);
-		else
-			send(sv->c_sock, "SUCCESS\n", 9, 0);
+		buff[r] = 0;
+		if (buff[0] == 0)
+			send(sv->c_sock, "\0", 1, 0);
+		try_builtins(buff, sv->c_sock);
+
 	}
 	// if ((r = recv(sv->c_sock, buff, 4095, 0)) < 0)
 	// 	server_error("RECV");

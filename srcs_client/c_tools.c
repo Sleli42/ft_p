@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   c_tools.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sleli42 <sleli42@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 23:50:21 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/21 20:55:26 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/22 02:12:08 by sleli42          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,10 @@ void	read_socket_return(int sock2read)
 
 	ft_memset(buff, 0, ft_strlen(buff));
 	if ((r = recv(sock2read, buff, 4095, 0)) > 0)
+	{
+		buff[r] = 0;
 		write(1, buff, ft_strlen(buff));
-	// if ((r = recv(sock2read, buff, 4095, 0)) < 0)
-	// 	client_error("RECV");
-	// if (r > 0)
-	// {
-	// 	ft_putstr(buff);
-	// 	ft_putstr("SUCCESS\n");
-	// }
-	// else
-	// 	ft_putstr("ERROR\n");
+	}
 }
 
 void	write_socket(int sock)
