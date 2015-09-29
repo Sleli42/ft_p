@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:21:53 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/29 10:39:00 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 12:36:25 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	display_return_and_explanation(char *err, int sock2write, int msg, int spec
 	else if (spec == 'f')
 	{
 		buff = ft_strjoin("~> ERROR <", err);
-		buff = ft_strjoin(buff, "> is a bad file.. [`KO`]\n");
+		buff = ft_strjoin(buff, ">  is not a valid file.. [`KO`]\n");
 		send(sock2write, buff, ft_strlen(buff), 0);
 		ft_strdel(&buff);
 	}
@@ -48,16 +48,13 @@ void	display_return_and_explanation(char *err, int sock2write, int msg, int spec
 	}
 }
 
-// $: cd cd
-// ~> ERROR 'cd' command not found	 [`KO`]
-
 void	read_socket(t_all *all)
 {
 	int		r;
-	char	buff[4096];
+	char	buff[MAX_SIZE];
 
 	ft_memset(buff, 0, ft_strlen(buff));
-	while ((r = recv(all->sv->c_sock, buff, 4095, 0)) > 0)
+	while ((r = recv(all->sv->c_sock, buff, MAX_SIZE - 1, 0)) > 0)
 	{
 		buff[r] = 0;
 		if (buff[0] == 0)

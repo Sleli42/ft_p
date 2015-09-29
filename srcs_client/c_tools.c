@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 23:50:21 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/29 10:02:39 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 12:37:53 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	read_socket_return(int sock2read)
 {
 	int		r;
-	char	buff[4096];
+	char	buff[MAX_SIZE];
 
 	ft_memset(buff, 0, ft_strlen(buff));
-	while ((r = recv(sock2read, buff, 4095, 0)) > 0)
+	while ((r = recv(sock2read, buff, MAX_SIZE - 1, 0)) > 0)
 	{
 		buff[r] = 0;
 		write(1, buff, ft_strlen(buff));
@@ -38,7 +38,7 @@ void	write_socket(int sock)
 		write(1, "$: ", 3);
 		while (get_next_line(0, &buff) > 0)
 		{
-			if ((r = send(sock, buff, 4095, 0)) < 0)
+			if ((r = send(sock, buff, MAX_SIZE - 1, 0)) < 0)
 				client_error("SEND");
 			if (ft_strcmp(buff, "quit") == 0)
 				close_and_exit(sock);

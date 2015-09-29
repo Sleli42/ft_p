@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/17 21:14:36 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/29 10:19:53 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 12:43:30 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,19 @@ void	try_exec(t_all *all, char *cmd)
 
 	cmd = ft_epur_str(cmd);
 	argv_bin = ft_strsplit(cmd, ' ');
+	close(1);
+	dup2(all->sv->c_sock, 1);
 	if (exec_right_binary(all, argv_bin) == 1)
 	{
 		dup2(1, STDOUT_FILENO);
 		del_array(&argv_bin);
 		display_return_and_explanation(cmd, all->sv->c_sock, 1, -1);
 	}
-	display_return_and_explanation(cmd, all->sv->c_sock, 0, -1);
+	else
+	{
+		// dup2(1, STDOUT_FILENO);
+		display_return_and_explanation(cmd, all->sv->c_sock, 0, -1);
+	}
 }
 
 int		good_access(char *bin)
@@ -56,7 +62,7 @@ int		exec_right_binary(t_all *all, char **argv_bin)
 		bin_tmp = create_path(all->env->path2exec[ct], argv_bin[0]);
 		if (good_access(bin_tmp))
 		{
-			exec_binary(all, bin_tmp, argv_bin, all->env->dupenv);
+			exec_binary(bin_tmp, argv_bin, all->env->dupenv);
 			return (1);
 		}
 		ft_strdel(&bin_tmp);
@@ -65,13 +71,11 @@ int		exec_right_binary(t_all *all, char **argv_bin)
 	return (0);
 }
 
-void	exec_binary(t_all *all, char *bin, char **argv_bin, char **env)
+void	exec_binary(char *bin, char **argv_bin, char **env)
 {
 	int		buff;
 	pid_t	pid;
 
-	close(1);
-	dup2(all->sv->c_sock, 1);
 	pid = fork();
 	if (pid == -1)
 		server_error("FORK");

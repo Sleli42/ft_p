@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/24 15:29:06 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/29 10:49:51 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 12:47:04 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,24 @@
 
 // int
 //      stat(const char *restrict path, struct stat *restrict buf);
+
+/*
+***
+- sending && receiving files
+- fix bugs exec
+-
+***
+*/
+
+
+
+
+
+
+
+
+
+
 
 int		check_file(char *file)
 {
@@ -31,7 +49,7 @@ int		check_file(char *file)
 
 void	send_file(t_all *all, char *cmd)
 {
-	//int		fd;
+	int		fd;
 	char	*buff;
 
 	buff = NULL;
@@ -39,9 +57,10 @@ void	send_file(t_all *all, char *cmd)
 	if (check_file(cmd) == -1)
 		display_return_and_explanation(cmd, all->sv->c_sock, 0, 'f');
 	else
-
-		//if ((fd = open(cmd, O_RDONLY)) == -1);
-			//error_server("OPEN");
+	{
+		if ((fd = open(cmd, O_RDONLY)) == -1)
+			server_error("OPEN");
+	}
 	/*send(all->sv->c_sock, pwd, ft_strlen(pwd), 0);*/
 }
 
