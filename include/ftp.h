@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 22:56:05 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 10:28:51 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@
 
 # include <sys/socket.h>		// socket(int domain, int type, int protocol)
 # include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>			// stat file
 # include <netinet/in.h>		// Internet Protocol family
 # include <arpa/inet.h>		// definitions for internet operations
 # include <netdb.h>			//definitions for network database operations
 # include <unistd.h>
-# include <sys/wait.h>
 # include <signal.h>
 
 # include <stdio.h>
 
-
+typedef struct stat		t_stat;
 
 typedef struct			s_server
 {
@@ -104,15 +105,22 @@ void		stop_connect(t_all *all, char *cmd);
 /*
 ***	s_exec.c
 */
-int			try_exec(t_all *all, char *cmd);
+void		try_exec(t_all *all, char *cmd);
 int			good_access(char *bin);
 char		*create_path(char *path, char *bin);
 int			exec_right_binary(t_all *all, char **argv_bin);
-void		exec_binary(char *bin, char **argv_bin, char **env);
+void		exec_binary(t_all *all, char *bin, char **argv_bin, char **env);
+/*
+***	s_file.c
+*/
+int			check_file(char *file);
+void		send_file(t_all *all, char *cmd);
+void		get_file(t_all *all, char *cmd);
+char	get_type(mode_t mode);
 /*
 ***	s_tools.c
 */
-void		display_return_and_explanation(char *err, int sock2write, int msg);
+void		display_return_and_explanation(char *err, int sock2write, int msg, int spec);
 void		read_socket(t_all *all);
 
 #endif

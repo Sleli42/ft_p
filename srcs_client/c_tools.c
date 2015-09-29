@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 23:50:21 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 23:06:08 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 10:02:39 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	write_socket(int sock)
 			read_socket_return(sock);
 			break ;
 		}
+		//close_and_exit(sock);
 	}
 }
 

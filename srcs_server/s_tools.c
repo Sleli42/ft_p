@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:21:53 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 23:22:59 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 10:39:00 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,42 @@
 
 //ssize_t recv(int s, void *buf, ssize_t len, int flags);
 
-void	display_return_and_explanation(char *err, int sock2write, int msg)
+void	display_return_and_explanation(char *err, int sock2write, int msg, int spec)
 {
 	char	*buff;
 
 	buff = NULL;
-	if (msg == 0)
+	if (spec == 'd')
 	{
-		buff = ft_strjoin("~> ERROR '", err);
-		buff = ft_strjoin(buff, "' command not found\t [`KO`]\n");
+		buff = ft_strjoin("~> ERROR <", err);
+		buff = ft_strjoin(buff, "> bad directory.. [`KO`]\n");
 		send(sock2write, buff, ft_strlen(buff), 0);
 		ft_strdel(&buff);
 	}
-	else if (msg == 1)
+	else if (spec == 'f')
+	{
+		buff = ft_strjoin("~> ERROR <", err);
+		buff = ft_strjoin(buff, "> is a bad file.. [`KO`]\n");
+		send(sock2write, buff, ft_strlen(buff), 0);
+		ft_strdel(&buff);
+	}
+	else if (msg == 0 && spec == -1)
+	{
+		buff = ft_strjoin("~> ERROR '", err);
+		buff = ft_strjoin(buff, "' command not found.. [`KO`]\n");
+		send(sock2write, buff, ft_strlen(buff), 0);
+		ft_strdel(&buff);
+	}
+	else if (msg == 1 && spec == -1)
 	{
 		buff = ft_strjoin("~> SUCCESS '", err);
 		buff = ft_strjoin(buff, "'\t [`OK`]\n");
 		send(sock2write, buff, ft_strlen(buff), 0);
 	}
 }
+
+// $: cd cd
+// ~> ERROR 'cd' command not found	 [`KO`]
 
 void	read_socket(t_all *all)
 {
@@ -43,16 +60,12 @@ void	read_socket(t_all *all)
 	while ((r = recv(all->sv->c_sock, buff, 4095, 0)) > 0)
 	{
 		buff[r] = 0;
-		//write(1, buff, ft_strlen(buff));
 		if (buff[0] == 0)
 			send(all->sv->c_sock, "\0", 1, 0);
 		else
 		{
 			if (try_builtins(all, buff) == 0)
-			{
 				try_exec(all, buff);
-			}
-
 		}
 	}
 }

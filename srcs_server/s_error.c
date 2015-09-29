@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 21:52:58 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 16:53:29 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 10:23:32 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ void	server_error(char *err)
 		ft_putstr("[client] recv() failed!\n");
 	if (ft_strcmp(err, "SEND") == 0)
 		ft_putstr("[client] send() failed!\n");
+	if (ft_strcmp(err, "STAT") == 0)
+		ft_putstr("stat() failed!\n");
 	exit(1);
 }

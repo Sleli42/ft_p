@@ -6,7 +6,7 @@
 #    By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/01 19:09:41 by lubaujar          #+#    #+#              #
-#    Updated: 2015/09/21 20:23:26 by lubaujar         ###   ########.fr        #
+#    Updated: 2015/09/29 09:59:32 by lubaujar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC_SERVER = server.c \
 				s_error.c \
 				s_builtins.c \
 				s_exec.c \
+				s_file.c \
 				s_tools.c \
 				debug.c
 
