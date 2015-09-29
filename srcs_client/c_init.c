@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:40:32 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/15 23:57:42 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 21:47:12 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,13 @@ int		create_client(char *addr, int port)
 	if (connect(sock, (struct sockaddr *)&sins, sizeof(sins)) == -1)
 		client_error("CONNECT");
 	return (sock);
+}
+
+t_all	*init_all(void)
+{
+	t_all	*all;
+
+	(void)all->sv;
+	(void)all->env;
+	return (all);
 }

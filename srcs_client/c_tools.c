@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 23:50:21 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/29 12:37:53 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 22:16:45 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	write_socket(int sock)
 		write(1, "$: ", 3);
 		while (get_next_line(0, &buff) > 0)
 		{
+			if (check_file_cmd(buff) == 1)
+				init_request();
 			if ((r = send(sock, buff, MAX_SIZE - 1, 0)) < 0)
 				client_error("SEND");
 			if (ft_strcmp(buff, "quit") == 0)
@@ -47,6 +49,13 @@ void	write_socket(int sock)
 		}
 		//close_and_exit(sock);
 	}
+}
+
+int		check_file_cmd(char *buff)
+{
+	if (ft_strncmp(buff, "get", 3) == 0 || ft_strncmp(buff, "put", 3) == 0)
+		return (1);
+	return (0);
 }
 
 void	close_and_exit(int sock)

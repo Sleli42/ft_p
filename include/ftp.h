@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/29 12:38:54 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/09/29 21:38:48 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 # include <stdio.h>
 # define MAX_SIZE	32768
+# define MAX_PATH	91
 
 typedef struct stat		t_stat;
 
@@ -45,10 +46,34 @@ typedef struct			s_env
 	char				**path2exec;
 }						t_env;
 
+# define				REQUEST_PUT		1
+# define				REQUEST_GET		2
+# define				REQUEST_DIR		3
+
+typedef struct			s_request
+{
+	int					req;
+	char				path[MAX_PATH];
+	size_t				nbbytes;		//pour PUT seulement
+}						t_request;
+
+# define				ANSWER_OK		0
+# define				ANSWER_UNKNOW	1
+# define				ANSWER_ERROR	2
+
+typedef struct			s_answer
+{
+	int					acc;
+	int					err;
+	size_t				nbbytes;
+}						t_answer;
+
 typedef struct			s_all
 {
 	t_server			*sv;
 	t_env				*env;
+	t_request			req;
+	t_answer			ans;
 }						t_all;
 
 typedef	struct			s_action
