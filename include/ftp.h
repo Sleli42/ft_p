@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/29 21:38:48 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/10/21 13:12:25 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include <signal.h>
 
 # include <stdio.h>
-# define MAX_SIZE	32768
-# define MAX_PATH	91
+# define		MAX_SIZE		32768
+# define 		MAX_PATH		91
 
 typedef struct stat		t_stat;
 
@@ -53,8 +53,8 @@ typedef struct			s_env
 typedef struct			s_request
 {
 	int					req;
-	char				path[MAX_PATH];
-	size_t				nbbytes;		//pour PUT seulement
+	char				*path;
+	int					nbbytes;		//pour PUT seulement
 }						t_request;
 
 # define				ANSWER_OK		0
@@ -65,15 +65,15 @@ typedef struct			s_answer
 {
 	int					acc;
 	int					err;
-	size_t				nbbytes;
+	size_t				nbbytes;		// pour GET seulement
 }						t_answer;
 
 typedef struct			s_all
 {
 	t_server			*sv;
 	t_env				*env;
-	t_request			req;
-	t_answer			ans;
+	t_request			*request;
+	t_answer			*answer;
 }						t_all;
 
 typedef	struct			s_action
@@ -95,12 +95,15 @@ void		client_error(char *err);
 */
 void		usage(char *s);
 int			create_client(char *addr, int port);
+t_all		*c_init_all(void);
 /*
 ***	c_tools.c
 */
 void		read_socket_return(int sock2read);
-void		write_socket(int sock);
+void		write_socket(t_all *all, int sock);
 void		close_and_exit(int sock);
+
+void	init_request(t_all *all, char *buff);
 /*
 ***	========================= server
 */
@@ -116,7 +119,7 @@ void		server_error(char *err);
 /*
 ***	s_init.c
 */
-t_all		*init_all(char **env);
+t_all		*s_init_all(char **env);
 t_env		*init_env(char **env);
 t_server	*init_server(void);
 void		usage(char *s);
@@ -148,5 +151,6 @@ char		get_type(mode_t mode);
 */
 void		display_return_and_explanation(char *err, int sock2write, int msg, int spec);
 void		read_socket(t_all *all);
+void		display_header(t_all *all, char *buff);
 
 #endif

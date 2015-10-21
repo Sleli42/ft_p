@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/24 15:29:06 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/29 22:16:46 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/10/01 14:01:36 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	send_file(t_all *all, char *cmd)
 		if (read(fd, buff, MAX_SIZE - 1) == -1)
 			server_error("READ");
 		// printf("%lu\n", sizeof(buff));
-		all.
+		// all.
 		send(all->sv->c_sock, buff, ft_strlen(buff), 0);
 	}
 	/*send(all->sv->c_sock, pwd, ft_strlen(pwd), 0);*/

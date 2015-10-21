@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/17 21:14:36 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/29 12:43:30 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/10/21 13:18:44 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	try_exec(t_all *all, char *cmd)
 	}
 	else
 	{
-		// dup2(1, STDOUT_FILENO);
+		dup2(1, STDOUT_FILENO);
 		display_return_and_explanation(cmd, all->sv->c_sock, 0, -1);
 	}
 }

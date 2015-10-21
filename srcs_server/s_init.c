@@ -6,13 +6,13 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/15 22:40:14 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/09/22 22:55:28 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/10/19 09:00:22 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftp.h"
 
-t_all		*init_all(char **env)
+t_all		*s_init_all(char **env)
 {
 	t_all	*new;
 
@@ -22,6 +22,8 @@ t_all		*init_all(char **env)
 	{
 		new->sv = init_server();
 		new->env = init_env(env);
+		new->request = (t_request *)malloc(sizeof(t_request));
+		new->answer = (t_answer *)malloc(sizeof(t_answer));
 	}
 	return (new);
 }
