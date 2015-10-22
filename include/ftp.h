@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:45:20 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/10/21 13:12:25 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/10/22 07:48:56 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void		stop_connect(t_all *all, char *cmd);
 /*
 ***	s_exec.c
 */
-void		try_exec(t_all *all, char *cmd);
+int			try_exec(t_all *all, char *cmd);
 int			good_access(char *bin);
 char		*create_path(char *path, char *bin);
 int			exec_right_binary(t_all *all, char **argv_bin);

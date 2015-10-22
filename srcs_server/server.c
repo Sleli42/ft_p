@@ -6,7 +6,7 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/13 14:44:50 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/10/21 13:24:51 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/10/22 08:03:42 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,22 @@ void	mini_read_sock(t_all *all)
 	ft_memset(buff, 0, ft_strlen(buff));
 	while ((r = read(all->sv->c_sock, buff, MAX_SIZE - 1)) > 0)
 	{
-		buff[r] = '\0';
+		buff[r - 1] = '\0';
 		// function display */
-		printf("Received %d bytes : %s\n", (int)ft_strlen(buff) - 1, buff);
-		if (buff[0] == 10)
+		printf("Received %d bytes : %s\n", (int)ft_strlen(buff), buff);
+		if (buff[0] == 10 || buff[0] == '\0')
 			write(all->sv->c_sock, "\0", 1);
 		else
 		{
 			if (try_builtins(all, buff) == 1)
 				write(all->sv->c_sock, "~ SUCCESS\n", 10);
 			else
-				write(all->sv->c_sock, "~ ERROR\n", 8);
+			{
+				if (try_exec(all, buff) == 1)
+					write(all->sv->c_sock, "~ SUCCESS\n", 10);
+				else
+					write(all->sv->c_sock, "~ ERROR\n", 8);
+			}
 		 		//try_exec(all, buff);
 
 		}

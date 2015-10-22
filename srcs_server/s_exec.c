@@ -6,31 +6,35 @@
 /*   By: lubaujar <lubaujar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/17 21:14:36 by lubaujar          #+#    #+#             */
-/*   Updated: 2015/10/21 13:18:44 by lubaujar         ###   ########.fr       */
+/*   Updated: 2015/10/22 08:43:55 by lubaujar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftp.h"
 
-void	try_exec(t_all *all, char *cmd)
+int		try_exec(t_all *all, char *cmd)
 {
 	char	**argv_bin;
 
 	cmd = ft_epur_str(cmd);
+	//printf("|%s|\n", cmd);
 	argv_bin = ft_strsplit(cmd, ' ');
-	close(1);
-	dup2(all->sv->c_sock, 1);
 	if (exec_right_binary(all, argv_bin) == 1)
 	{
-		dup2(1, STDOUT_FILENO);
+		// close(1);
+		// dup2(1, STDOUT_FILENO);
 		del_array(&argv_bin);
-		display_return_and_explanation(cmd, all->sv->c_sock, 1, -1);
+		return (1);
+		//display_return_and_explanation(cmd, all->sv->c_sock, 1, -1);
 	}
-	else
-	{
-		dup2(1, STDOUT_FILENO);
-		display_return_and_explanation(cmd, all->sv->c_sock, 0, -1);
-	}
+	// else
+	// {
+	// 	// close(1);
+	// 	// dup2(1, STDOUT_FILENO);
+	// 	return (0);
+	// 	//display_return_and_explanation(cmd, all->sv->c_sock, 0, -1);
+	// }
+	return (0);
 }
 
 int		good_access(char *bin)
@@ -63,6 +67,7 @@ int		exec_right_binary(t_all *all, char **argv_bin)
 		if (good_access(bin_tmp))
 		{
 			exec_binary(bin_tmp, argv_bin, all->env->dupenv);
+			//dup2(1, all->sv->c_sock);
 			return (1);
 		}
 		ft_strdel(&bin_tmp);
